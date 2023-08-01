@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/models/weather.dart';
+import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/services/weather_service.dart';
 
@@ -8,9 +8,9 @@ import 'package:weather_app/services/weather_service.dart';
 
 class Search extends StatelessWidget {
   String? city;
-  VoidCallback? updateUI;
+  // VoidCallback? updateUI;
 
-  Search({super.key, this.updateUI});
+  // Search({super.key, this.updateUI});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class Search extends StatelessWidget {
 
     Future<void> setWeather() async {
       WeatherService service = WeatherService();
-      Weather? weather = await service.getWeather(city: city!);
+      WeatherModel? weather = await service.getWeather(city: city!);
 
       // print(weather.toString());
       // weatherData = weather; // global varible
@@ -41,6 +41,7 @@ class Search extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: TextField(
+            autofocus: true,
             style: const TextStyle(fontSize: 20),
             onChanged: (data) {
               city = data;
@@ -51,8 +52,9 @@ class Search extends StatelessWidget {
             },
             decoration: InputDecoration(
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               border: const OutlineInputBorder(),
+
               // suffix: GestureDetector(
               //   onTap: () async {
               //     await setWeather();

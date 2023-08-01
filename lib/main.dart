@@ -28,9 +28,9 @@ class WeatherApp extends StatelessWidget {
           primarySwatch: //Colors.orange
               Provider.of<WeatherProvider>(context).weatherData?.getColor() ??
                   Colors.blue
-          // Provider.of<WeatherProvider>(context).weatherData == null
-          // ? Colors.orange
-          // : Provider.of<WeatherProvider>(context).weatherData!.getColor(),
+          // Provider.of<WeatherProvider>(context).weatherData != null
+          // ? Provider.of<WeatherProvider>(context).weatherData!.getColor(),
+          // : Colors.orange
           ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),

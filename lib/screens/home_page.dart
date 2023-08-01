@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/models/weather.dart';
+import 'package:weather_app/models/weather_model.dart';
 // import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/screens/search_page.dart';
@@ -17,16 +17,19 @@ class _HomePageState extends State<HomePage> {
   // Weather? weather;
 
   // void updateUI() {
-  //   setState(() {});
+  //   setState(() {
+  //     Provider.of<WeatherProvider>(context).weatherData = getWeather(Provider.of<WeatherProvider>(context).weatherData!.location);
+  // });
   // }
 
-  Future<void> handlerRefresh() async {
-    await Future.delayed(const Duration(seconds: 1));
-  }
+  // Future<void> handlerRefresh() async {
+  //   await Future.delayed(const Duration(seconds: 1));
+  // }
 
   @override // use provider and notify to solve rebuild app
   Widget build(BuildContext context) {
-    Weather? weatherData = Provider.of<WeatherProvider>(context).weatherData;
+    WeatherModel? weatherData =
+        Provider.of<WeatherProvider>(context).weatherData;
 
     dynamic date = weatherData?.date;
     dynamic time;
@@ -35,6 +38,7 @@ class _HomePageState extends State<HomePage> {
       date = date.split(' ')[0];
     } else {
       date = '??';
+      time = '??';
     }
 
     List<Widget> getforcasts() {
@@ -58,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (constext) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Search();
               }));
             },
@@ -67,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               setState(() {
-                //
+                ////////////////////////
               });
             },
             icon: const Icon(Icons.refresh),
@@ -78,6 +82,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(fontSize: 25, fontFamily: 'Pacifico'),
         ),
       ),
+      // backgroundColor: weatherData?.getColor()[200],
       body: weatherData == null
           ? Center(
               child: Column(
@@ -102,15 +107,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
-          : //LiquidPullToRefresh(
+
+          //LiquidPullToRefresh(
           //onRefresh: handlerRefresh,
           // child: ListView(children: [
-          Container(
+
+          : Container(
+              // margin: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 colors: [
-                  weatherData
-                      .getColor(), // default weatherData.getColor()[500]!
+                  // default weatherData.getColor()[500]!
+                  weatherData.getColor(),
                   weatherData.getColor()[100]!,
                   weatherData.getColor(),
                 ],
@@ -208,12 +216,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  // ListView.builder(
-                  //   itemCount: weatherData.getForcastDays().length + 1,
-                  //   itemBuilder: (context, i) {
-                  //     getforcasts()[i];
-                  //   },
-                  // ),
 
                   Padding(
                     padding: const EdgeInsets.only(top: 35),
@@ -223,6 +225,16 @@ class _HomePageState extends State<HomePage> {
                   getforcasts()[2],
                   getforcasts()[3],
                   getforcasts()[4],
+
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 35),
+                  //   child: ListView.builder(
+                  //     itemCount: weatherData.getForcastDays().length,
+                  //     itemBuilder: (context, i) {
+                  //       return getforcasts()[i];
+                  //     },
+                  //   ),
+                  // ),
 
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 35),

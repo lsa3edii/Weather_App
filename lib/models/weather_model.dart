@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Weather {
+class WeatherModel {
   final String location;
   final String date; // Another Solution DateTime date;
   final double currentTemp;
@@ -8,9 +8,9 @@ class Weather {
   final double maxTemp;
   final double minTemp;
   final String condition;
-  List forcastdays;
+  final List forcastdays;
 
-  Weather(
+  WeatherModel(
       {required this.location,
       required this.date,
       required this.currentTemp,
@@ -31,10 +31,11 @@ class Weather {
   //   condition = forcast['condition']['text'];
   // }
 
-  factory Weather.fromJson(dynamic data) {
+  // dynamic data
+  factory WeatherModel.fromJson(Map data) {
     var forcast = data['forecast']['forecastday'][0]['day'];
 
-    return Weather(
+    return WeatherModel(
         location: data['location']['name'],
         date: data['location']
             ['localtime'], // DateTime.parse(data['location']['localtime'])
@@ -51,7 +52,7 @@ class Weather {
     List avgTemps = [];
     List maxTemps = [];
     List minTemps = [];
-    List all;
+    // List all;
 
     for (int i = 1; i < forcastdays.length; i++) {
       days.add(forcastdays[i]['date']);
@@ -59,9 +60,9 @@ class Weather {
       maxTemps.add(forcastdays[i]['day']['maxtemp_c']);
       minTemps.add(forcastdays[i]['day']['mintemp_c']);
     }
-    all = [days, avgTemps, maxTemps, minTemps];
+    // all = [days, avgTemps, maxTemps, minTemps];
     // print(days);
-    return all;
+    return [days, avgTemps, maxTemps, minTemps];
   }
 
   String getImage() {
@@ -125,7 +126,7 @@ class Weather {
 
       case 'Thunder':
       case 'Thundersrtorm':
-        return Colors.blue;
+        return Colors.blueGrey;
 
       default:
         return Colors.blue;
